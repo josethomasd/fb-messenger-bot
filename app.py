@@ -213,7 +213,12 @@ psychobabble = [
       "Perhaps the answer lies within yourself?",
       "Why don't you tell me?"]],
 
-    [r'quit',
+
+    [r'Who is the HOD of IT Department',
+     ["HOD of IT Department is Prof. Anju Susan George",]],
+     
+
+    [r'bye',
      ["Thank you for talking with me.",
       "Good-bye.",
       "Thank you, that will be $150.  Have a good day!"]],
@@ -268,7 +273,7 @@ def webhook():
 
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    message_text = messaging_event["message"]["text"]  # the message's text
+                    message_text =m essaging_event["message"]["text"]  # the message's text
 
                     msg = analyze(message_text)
 
