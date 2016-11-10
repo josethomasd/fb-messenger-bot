@@ -105,7 +105,7 @@ psychobabble = [
     [r'HOD of IT',
      ["Prof. Anju Susan George"]],
 
-    [r'How can I reach VJCET',
+    [r'Location of VJCET',
      ["Use the link to open maps goo.gl/vPzLbx"]],
     
     [r'(.*) computer(.*)',
