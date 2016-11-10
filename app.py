@@ -102,10 +102,12 @@ psychobabble = [
      ["You seem quite sure.",
       "OK, but can you elaborate a bit?"]],
 
-    [r'HOD',
-     ["Anju"]],
+    [r'HOD of IT',
+     ["Prof. Anju Susan George"]],
 
-
+    [r'How can I reach VJCET',
+     ["Use the link to open maps goo.gl/vPzLbx"]],
+    
     [r'(.*) computer(.*)',
      ["Are you really talking about me?",
       "Does it seem strange to talk to a computer?",
@@ -217,7 +219,7 @@ psychobabble = [
       "Perhaps the answer lies within yourself?",
       "Why don't you tell me?"]],
 
-    [r'quit',
+    [r'Bye',
      ["Thank you for talking with me.",
       "Good-bye.",
       "Thank you, that will be $150.  Have a good day!"]],
