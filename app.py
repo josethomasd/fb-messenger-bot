@@ -41,11 +41,11 @@ def webhook():
                     message_text = messaging_event["message"]["text"]  # the message's text
 
                     message_text = '+'.join(message_text.split(" "))
-
+                    time.sleep(5)
                     send_message(sender_id, "www.google.com")
-
+                    time.sleep(5)
                     send_message(sender_id, "www.yahoo.com")                    
-                    
+                    time.sleep(5)
                     send_message(sender_id, "www.fb.com")
                     
 
