@@ -42,7 +42,12 @@ def webhook():
 
                     message_text = '+'.join(message_text.split(" "))
 
-                    send_message(sender_id, "http://www.google.com")
+                    send_message(sender_id, "www.google.com")
+
+                    send_message(sender_id, "www.yahoo.com")                    
+                    
+                    send_message(sender_id, "www.fb.com")
+                    
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -70,16 +75,8 @@ def send_message(recipient_id, message_text):
             "id": recipient_id
         },
         "message": {
-           "text": message_text,
-           "attachment":{
-            "type":"image",
-            "payload":{
-                "url":"https://en.wikipedia.org/static/images/project-logos/enwiki.png"
-                }
-            }
-
+            "text": message_text
         }
-
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
