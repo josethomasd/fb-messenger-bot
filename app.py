@@ -41,10 +41,12 @@ def webhook():
                     message_text = messaging_event["message"]["text"]  # the message's text
 
                     message_text = '+'.join(message_text.split(" "))
-                    time.sleep(5)
+
                     send_message(sender_id, "www.google.com")
+                    send_state(sender_id)
                     time.sleep(5)
-                    send_message(sender_id, "www.yahoo.com")                    
+                    send_message(sender_id, "www.yahoo.com")
+                    send_state(sender_id)                    
                     time.sleep(5)
                     send_message(sender_id, "www.fb.com")
                     
@@ -81,6 +83,28 @@ def send_message(recipient_id, message_text):
 
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+    return "ok", 200
+def send_state(recipient_id:
+
+    log("sending state to {recipient}: {text}".format(recipient=recipient_id))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "sender_action":"typing_on"
+
+    })
+    r = requests.post("https://graph.facebook.com/v2.8/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
