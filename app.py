@@ -87,7 +87,7 @@ def send_message(recipient_id, message_text):
         log(r.status_code)
         log(r.text)
     return "ok", 200
-def send_state(recipient_id:
+def send_state(recipient_id):
 
     log("sending state to {recipient}: {text}".format(recipient=recipient_id))
 
