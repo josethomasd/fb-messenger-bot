@@ -4,6 +4,7 @@ import json
 
 import re
 import random
+import time
 
 import requests
 from flask import Flask, request
@@ -48,7 +49,14 @@ def webhook():
                     #resp = requests.get(final_url)
                     #msg = json.loads(resp.text)
                     #msg = msg['response'][0]['output']
- 		    msg = "Ciao adios"
+		    time.sleep(15)
+ 		    msg = "Message one"
+                    send_message(sender_id, msg)
+		    time.sleep(10)
+		    msg = "Message two"
+                    send_message(sender_id, msg)
+		    time.sleep(5)
+	 	    msg = "Message three"
                     send_message(sender_id, msg)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
