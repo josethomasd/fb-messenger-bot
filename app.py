@@ -2,8 +2,6 @@ import os
 import sys
 import json
 
-import re
-import random
 import time
 
 import requests
@@ -44,20 +42,14 @@ def webhook():
 
                     message_text = '+'.join(message_text.split(" "))
 
-                    #server_url = "https://ccbserver.herokuapp.com/api/msg/"
-                    #final_url = server_url+message_text
-                    #resp = requests.get(final_url)
-                    #msg = json.loads(resp.text)
-                    #msg = msg['response'][0]['output']
 		    time.sleep(15)
- 		    msg = "Message one"
-                    send_message(sender_id, msg)
+                    send_message(sender_id, "Message one")
+
 		    time.sleep(10)
-		    msg = "Message two"
-                    send_message(sender_id, msg)
+                    send_message(sender_id, "Message two")
+
 		    time.sleep(5)
-	 	    msg = "Message three"
-                    send_message(sender_id, msg)
+                    send_message(sender_id, "Message three")
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -93,23 +85,6 @@ def send_message(recipient_id, message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
-
-
-def reflect(fragment):
-    tokens = fragment.lower().split()
-    for i, token in enumerate(tokens):
-        if token in reflections:
-            tokens[i] = reflections[token]
-    return ' '.join(tokens)
-
-
-def analyze(statement):
-    for pattern, responses in psychobabble:
-        match = re.match(pattern, statement.rstrip(".!"))
-        if match:
-            response = random.choice(responses)
-            return response.format(*[reflect(g) for g in match.groups()])
-
 
 
 def log(message):  # simple wrapper for logging to stdout on heroku
