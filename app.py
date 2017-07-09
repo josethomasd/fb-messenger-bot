@@ -89,7 +89,7 @@ def send_message(recipient_id, message_text):
     return "ok", 200
 def send_state(recipient_id):
 
-    log("sending state to {recipient}: {text}".format(recipient=recipient_id))
+    log("sending state to {recipient}: ".format(recipient=recipient_id))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
