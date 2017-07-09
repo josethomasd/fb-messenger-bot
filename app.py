@@ -9,7 +9,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
+@app.route('/webhook', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
     # the 'hub.challenge' value it receives in the query arguments
@@ -60,11 +60,6 @@ def webhook():
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     pass
 
-    return "ok", 200
-
-@app.route('/webhook', methods=['POST'])
-def web():
-    send_message(sender_id, "Yeah")
     return "ok", 200
 
 def send_message(recipient_id, message_text):
