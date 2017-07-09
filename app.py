@@ -62,9 +62,10 @@ def webhook():
 
     return "ok", 200
 
-@app.route('/webhook/', methods=['POST'])
+@app.route('/webhook', methods=['POST'])
 def web():
     send_message(sender_id, "Yeah")
+    return "ok", 200
 
 def send_message(recipient_id, message_text):
 
