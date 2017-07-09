@@ -37,18 +37,18 @@ def webhook():
 
                 if messaging_event.get("message"):  # someone sent us a message
 
-                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message ok
+                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message 
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
 
                     message_text = '+'.join(message_text.split(" "))
 
-                    server_url = "https://ccbserver.herokuapp.com/api/msg/"
-                    final_url = server_url+message_text
-                    resp = requests.get(final_url)
-                    msg = json.loads(resp.text)
-                    msg = msg['response'][0]['output']
-
+                    #server_url = "https://ccbserver.herokuapp.com/api/msg/"
+                    #final_url = server_url+message_text
+                    #resp = requests.get(final_url)
+                    #msg = json.loads(resp.text)
+                    #msg = msg['response'][0]['output']
+ 		    msg = "Ciao adios"
                     send_message(sender_id, msg)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
