@@ -2,14 +2,15 @@ import os
 import sys
 import json
 
-import time
+import re
+import random
 
 import requests
 from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/webhook', methods=['GET'])
+@app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
     # the 'hub.challenge' value it receives in the query arguments
@@ -21,7 +22,7 @@ def verify():
     return "Hello world", 200
 
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/', methods=['POST'])
 def webhook():
 
     # endpoint for processing incoming messaging events
@@ -36,20 +37,19 @@ def webhook():
 
                 if messaging_event.get("message"):  # someone sent us a message
 
-                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message 
+                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
 
                     message_text = '+'.join(message_text.split(" "))
 
-                    send_message(sender_id, "www.google.com")
-                    send_state(sender_id)
-                    time.sleep(5)
-                    send_message(sender_id, "www.yahoo.com")
-                    send_state(sender_id)                    
-                    time.sleep(5)
-                    send_message(sender_id, "www.fb.com")
-                    
+                    server_url = "https://ccbserver.herokuapp.com/api/msg/"
+                    final_url = server_url+message_text
+                    resp = requests.get(final_url)
+                    msg = json.loads(resp.text)
+                    msg = msg['response'][0]['output']
+
+                    send_message(sender_id, msg)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -61,6 +61,7 @@ def webhook():
                     pass
 
     return "ok", 200
+
 
 def send_message(recipient_id, message_text):
 
@@ -84,29 +85,24 @@ def send_message(recipient_id, message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
-    return "ok", 200
-def send_state(recipient_id):
 
-    log("sending state to {recipient}: ".format(recipient=recipient_id))
 
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "sender_action":"typing_on"
+def reflect(fragment):
+    tokens = fragment.lower().split()
+    for i, token in enumerate(tokens):
+        if token in reflections:
+            tokens[i] = reflections[token]
+    return ' '.join(tokens)
 
-    })
-    r = requests.post("https://graph.facebook.com/v2.8/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
-    return "ok", 200
+
+def analyze(statement):
+    for pattern, responses in psychobabble:
+        match = re.match(pattern, statement.rstrip(".!"))
+        if match:
+            response = random.choice(responses)
+            return response.format(*[reflect(g) for g in match.groups()])
+
+
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
